@@ -7,4 +7,4 @@ There are some key concepts that make Kelly unique 🙏🏻:
 * **Non invasive:** Kelly focus on being the least invasive as possible in your components architecture. This means that there is only wrapping components and nothing else. The least your write, the better it is.
 * **Minimalistic:** The goal is not to cover every single scenario, instead Kelly comes with a small set of useful React components which  are all ruled by the status of your application. Either your application has loaded content, either not.
 Those two states are the keystone of a skeleton screen and every components are designed to respond accordingly.
-* **Adaptable**: 
+* **Adaptable**: With wrapper design pattern, you won't really have to worry or update everything everytime that you update your components architecture. Instead, Kelly will adapt automatically to the updated components.
