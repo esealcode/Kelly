@@ -9,9 +9,34 @@ There are some key concepts that make Kelly unique 🙏🏻:
 Those two states are the keystone of a skeleton screen and every components are designed to respond to it accordingly.
 * **Flexible**: Kelly's goal is not to cover every single scenario on his own, instead it provide some necessary components to build different skeleton architecture.
 
+## Table of contents
+* [Why 🤔 ?](#why)
+* [How Kelly works ⚙️](#howitworks)
+* [Installation](#installation)
+* [Usage example](#usage-example)
+* [API Reference](#api-reference)
+
+<a id="why" hidden></a>
 ## Why 🤔 ?
 In few recent years, there has been many improvements in web **UI/UX** design pattern, one of those is **Skeleton screens**.
 The basic idea behind skeleton screen is, instead of having a **loading spin**, or a **text** as indicator for the user that content is being downloaded, we could use a more intuitive approach based on the actual page architecture. In fact, we don't really need to have the actual content to know what the page should approximatly looks like when being completly loaded. So the basic idea is that, we could put a preview of what an area of the page should looks like, this preview is called the **Skeleton**. Basically it is a composition of block ( often soft grey ) which take the shape of the content being loaded.
+
+<a id="howitworks" hidden></a>
+## How Kelly works ⚙️ ?
+In his most fundamental form, Kelly expose one major component named `Skeleton` abstracted as an HOC binded with a custom context.
+What `Skeleton` component do is simply iterating over his direct children and inject a `bone` ( which is basically a `div` React element with a custom style ) in them. However, a `bone` is designed to cover all available space in his parent which means that a `bone` has some static css properties which are: 
+```css
+.bone {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+}
+```
+
+This design comes with one restriction, **the parent element must be positionned**. Which means that the parent element should have a css property `position` to overwrite the default position defined as `static`. If the parent element was not properly positionned, `bone` positionning design won't works as expected because `width`, `height`, `top`, `left` properties rely on the closest positionned ancestor.
 
 ## Installation
 ```
@@ -20,14 +45,22 @@ The basic idea behind skeleton screen is, instead of having a **loading spin**, 
 ## Usage example
 Consider that we have the following component:
 ```javascript
+
+this.state = {
+    authorAvatar: '',
+    authorName: '',
+    authorSubQuote: ''
+}
+    
+
 <Author>
     <Avatar>
         <img src={ authorAvatar } />
     </Avatar>
 
     <Informations>
-        <Name></Name>
-        <SubQuote></SubQuote>
+        <Name>{ authorName }</Name>
+        <SubQuote>{ authorSubQuote }</SubQuote>
     </Informations>
 </Author>
 ```
@@ -40,10 +73,10 @@ class AuthorComponent extends React.Component {
 
     constructor(props) {
         this.state = {
-            userDataLoaded: false,
-            userAvatar: '',
-            userName: '',
-            userSubQuote: ''
+            authorDataLoaded: false,
+            authorAvatar: '',
+            authorName: '',
+            authorSubQuote: ''
         }
 
         // We create a Skeleton provider, which basically is 
@@ -51,14 +84,14 @@ class AuthorComponent extends React.Component {
         this.AuthorSkeleton = CreateSkeletonProvider({
             theme: { background: "#777" }, // The theme that need to be applied to bones
             state: () => this.state, // State provider
-            condition: state => !state.userDataLoaded // Condition function to define whether 
+            condition: state => !state.authorDataLoaded // Condition function to define whether 
                                                       // the skeleton should be active or not
         })
     }
 
     render() {
        const { AuthorSkeleton } = this
-       const { userName, userSubQuote, userAvatar } = this.state
+       const { authorName, authorSubQuote, authorAvatar } = this.state
 
        return (
         <Author>
@@ -71,11 +104,11 @@ class AuthorComponent extends React.Component {
             <Informations>
                 <AuthorSkeleton>
                     <Name>
-                        <SkeletonResolve>{ userName }</SkeletonResolve>
+                        <SkeletonResolve>{ authorName }</SkeletonResolve>
                         <SkeletonFragment><BlankSpace len={ 8 } /></SkeletonFragment>
                     </Name>
                     <SubQuote>
-                        <SkeletonResolve>{ userSubQuote }</SkeletonResolve>
+                        <SkeletonResolve>{ authorAvatar }</SkeletonResolve>
                         <SkeletonFragment>
                             <div style={ { position: "relative", margin: "3px" } }>
                                 <RandText min={ 3 } max={ 11 } />
