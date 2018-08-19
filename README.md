@@ -94,13 +94,13 @@ That's it, we defined our condition, and wrapped our content with our Skeleton. 
 
 ## API Reference
 * [Components](#components)
-    * SkeletonResolve
-    * SkeletonFragment
-    * SkeletonIgnore
-    * RandSpace
-    * FixedSpace
-* Functions
-    * CreateSkeletonProvider
+    * [SkeletonResolve](#skeletonresolve)
+    * [SkeletonFragment](#skeletonfragment)
+    * [SkeletonIgnore](#skeletonignore)
+    * [RandSpace](#randspace)
+    * [FixedSpace](#fixedspace)
+* [Functions](#functions)
+    * [CreateSkeletonProvider](#createskeletonprovider)
     
 ## Components
 
@@ -130,7 +130,7 @@ That's it, we defined our condition, and wrapped our content with our Skeleton. 
     
 ## Functions
 
-### CreateSkeletonProvider(options)
+### CreateSkeletonProvider
 `CreateSkeletonProvider` is the primary function of Kelly, it allow you to create kind of an HOC which have a binded context which provide it the theme to apply, the state provider and the condition for rendering the skeleton or not.
 
 * **Args**:
